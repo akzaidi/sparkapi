@@ -4,9 +4,13 @@
 \alias{sparkapi_connection_create}
 \title{Create a sparkapi_connection object.}
 \usage{
-sparkapi_connection_create(backend, monitor)
+sparkapi_connection_create(spark_context, hive_context, backend, monitor)
 }
 \arguments{
+\item{spark_context}{Instance of SparkContext object}
+
+\item{hive_context}{Instance of HiveContext object}
+
 \item{backend}{R socket connection to backend}
 
 \item{monitor}{R socket connection for monitor}
@@ -26,4 +30,5 @@ functions.
 \seealso{
 \code{\link{sparkapi_connection}}
 }
+\keyword{internal}
 

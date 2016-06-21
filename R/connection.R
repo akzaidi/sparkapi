@@ -10,6 +10,8 @@
 #' \code{\link{sparkapi_invoke_new}} and \code{\link{sparkapi_invoke_static}}
 #' functions.
 #'
+#' @param spark_context Instance of SparkContext object
+#' @param hive_context Instance of HiveContext object
 #' @param backend R socket connection to backend
 #' @param monitor R socket connection for monitor
 #'
@@ -17,13 +19,47 @@
 #'
 #' @seealso \code{\link{sparkapi_connection}}
 #'
+#' @keywords internal
+#'
 #' @export
-sparkapi_connection_create <- function(backend, monitor) {
+sparkapi_connection_create <- function(spark_context,
+                                       hive_context,
+                                       backend,
+                                       monitor) {
   structure(class = "sparkapi_connection", list(
+    spark_context = spark_context,
+    hive_context = hive_context,
     backend = backend,
     monitor = monitor
   ))
 }
+
+#' Get the SparkContext associated with a connection
+#'
+#' Get the SparkContext \code{spark_jobj} associated with a
+#' \code{sparkapi_connection}
+#'
+#' @param connection Connection to get SparkContext from
+#'
+#' @return Reference to SparkContext
+#' @export
+sparkapi_spark_context <- function(connection) {
+  sparkapi_connection(connection)$spark_context
+}
+
+#' Get the HiveContext associated with a connection
+#'
+#' Get the HiveContext \code{spark_jobj} associated with a
+#' \code{sparkapi_connection}
+#'
+#' @param connection Connection to get HiveContext from
+#'
+#' @return Reference to HiveContext
+#' @export
+sparkapi_hive_context <- function(connection) {
+  sparkapi_connection(connection)$hive_context
+}
+
 
 #' Get the sparkapi_connection associated with an object
 #'
@@ -45,7 +81,7 @@ sparkapi_connection <- function(x, ...) {
 #' @export
 sparkapi_connection.default <- function(x, ...) {
   stop("Unable to retreive a sparkapi_connection from object of class ",
-       class(x), call. = FALSE)
+       paste(class(x), collapse = " "), call. = FALSE)
 }
 
 #' @export
@@ -68,6 +104,8 @@ sparkapi_connection.sparkapi_jobj <- function(x, ...) {
 #'
 #' @return List with \code{backendPort}, \code{monitorPort}, and
 #'   \code{rLibraryPath}
+#'
+#' @keywords internal
 #'
 #' @export
 sparkapi_read_shell_file <- function(shell_file) {
