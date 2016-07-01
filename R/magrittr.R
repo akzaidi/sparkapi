@@ -1,14 +1,13 @@
-#' magrittr forward-pipe operator
+
+#' Pipe operator
 #'
-#' Pipe an object forward into a function or call expression.
+#' See \code{\link[magrittr]{\%>\%}} for more details.
 #'
-#' @param lhs A value or the magrittr placeholder.
-#' @param rhs A function call using the magrittr semantics.
-#'
-#' @keywords internal
-#' @importFrom magrittr %>%
 #' @name %>%
-#' @rdname magrittr-forward-pipe
+#' @rdname pipe
+#' @keywords internal
 #' @export
+#' @importFrom magrittr %>%
+#' @usage lhs \%>\% rhs
 NULL
 
